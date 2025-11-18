@@ -10,7 +10,6 @@ export class BankInfoModel extends Model<InferAttributes<BankInfoModel>, InferCr
   declare card_number?: string;
   declare expiry_date?: string;
   declare currency?: string;
-  declare iban?: string;
   declare created_at: CreationOptional<Date>;
   declare updated_at: CreationOptional<Date>;
   declare deleted_at: CreationOptional<Date>;
@@ -43,11 +42,6 @@ BankInfoModel.init(
         allowNull: true,
         defaultValue: null,
       },
-      iban: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null,
-      },
       created_at: DataTypes.DATE,
       updated_at: DataTypes.DATE,
       deleted_at: DataTypes.DATE,
@@ -64,6 +58,6 @@ BankInfoModel.init(
   },
 );
 
-BankInfoModel.belongsTo(UserModel, { targetKey: 'id', foreignKey: 'user_id', as: 'bank_info' });
+UserModel.hasOne(BankInfoModel, { sourceKey: 'id', foreignKey: 'user_id', as: 'bank_info' });
 
 export default BankInfoModel;

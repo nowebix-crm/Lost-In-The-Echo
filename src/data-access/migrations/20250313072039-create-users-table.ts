@@ -48,11 +48,12 @@ export const up: Migration = async ({ context: sequelize }) =>
       },
       role: {
         type: DataTypes.ENUM(
-            USER_ROLES.CLIENT,
+            USER_ROLES.FREE,
+            USER_ROLES.PREMIUM,
             USER_ROLES.ADMIN,
         ),
         allowNull: false,
-        defaultValue: USER_ROLES.CLIENT,
+        defaultValue: USER_ROLES.FREE,
       },
       phone: {
         type: DataTypes.STRING,

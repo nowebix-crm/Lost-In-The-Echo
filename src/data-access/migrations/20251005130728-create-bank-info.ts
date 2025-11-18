@@ -31,11 +31,6 @@ export const up: Migration = async ({ context: sequelize }) => {
             allowNull: true,
             defaultValue: null,
         },
-        iban: {
-          type: DataTypes.STRING,
-          allowNull: true,
-          defaultValue: null,
-        },
         created_at: DataTypes.DATE,
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE,

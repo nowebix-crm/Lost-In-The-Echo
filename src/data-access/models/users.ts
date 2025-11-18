@@ -4,6 +4,8 @@ import { sequelize } from '../../db/db-connection';
 
 import { USER_STATUSES, USER_ROLES, USER_GENDERS } from '../../constants/users-contstants';
 
+import type { UserRoles, UserStatuses, UserGenders, AddressInfoType, CompanyInfoType, BankInfoType } from '../../constants/users-contstants';
+
 import { UserTokensModel } from './refresh-token';
 
 export class UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
@@ -13,13 +15,16 @@ export class UserModel extends Model<InferAttributes<UserModel>, InferCreationAt
   declare birth_date: CreationOptional<Date>;
   declare email: string;
   declare password: string;
-  declare status: USER_STATUSES;
-  declare role: USER_ROLES;
+  declare status: UserStatuses;
+  declare role: UserRoles;
   declare phone: CreationOptional<string>;
-  declare gender: CreationOptional<USER_GENDERS>;
+  declare gender: CreationOptional<UserGenders>;
   declare created_at: CreationOptional<Date>;
   declare updated_at: CreationOptional<Date>;
   declare deleted_at: CreationOptional<Date>;
+  declare address_info: AddressInfoType;
+  declare bank_info: BankInfoType;
+  declare company_info: CompanyInfoType;
 }
 
 UserModel.init(
@@ -60,11 +65,12 @@ UserModel.init(
       },
       role: {
         type: DataTypes.ENUM(
-            USER_ROLES.CLIENT,
+            USER_ROLES.FREE,
+            USER_ROLES.PREMIUM,
             USER_ROLES.ADMIN,
         ),
         allowNull: false,
-        defaultValue: USER_ROLES.CLIENT,
+        defaultValue: USER_ROLES.FREE,
       },
       phone: {
         type: DataTypes.STRING,
@@ -102,6 +108,7 @@ UserModel.init(
 );
 
 UserModel.hasMany(UserTokensModel, { sourceKey: 'id', foreignKey: 'user_id', as: 'refresh_token' });
+
 UserTokensModel.belongsTo(UserModel, { targetKey: 'id', foreignKey: 'user_id', as: 'user' });
 
 export default UserModel;

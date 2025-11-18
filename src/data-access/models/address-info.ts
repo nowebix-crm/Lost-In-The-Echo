@@ -70,6 +70,6 @@ AddressInfoModel.init(
   },
 );
 
-AddressInfoModel.belongsTo(UserModel, { targetKey: 'id', foreignKey: 'user_id', as: 'address_info' });
+UserModel.hasOne(AddressInfoModel, { sourceKey: 'id', foreignKey: 'user_id', as: 'address_info' });
 
 export default AddressInfoModel;

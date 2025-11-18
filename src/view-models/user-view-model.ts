@@ -1,4 +1,10 @@
-import { UserType, USER_ROLES, USER_STATUSES, USER_GENDERS } from "../constants/users-contstants";
+import { UserType } from "../constants/users-contstants";
+
+import type { AddressInfoType, BankInfoType, CompanyInfoType, UserStatuses, UserGenders, UserRoles } from "../constants/users-contstants";
+
+import AddressInfoViewModel from "./address-info-view-model";
+import BankInfoViewModel from "./bank-info-view-model";
+import CompanyInfoViewModel from "./company-info-view-model";
 
 class UserViewModel {
     declare id: string;
@@ -7,12 +13,15 @@ class UserViewModel {
     declare birthDate: Date | null;
     declare email: string;
     declare password: string;
-    declare status: USER_STATUSES;
-    declare role: USER_ROLES;
+    declare status: UserStatuses;
+    declare role: UserRoles;
     declare phone: string | null;
-    declare gender: USER_GENDERS | null;
+    declare gender: UserGenders | null;
     declare createdAt: Date;
     declare updatedAt: Date;
+    declare addressInfo: AddressInfoType | null;
+    declare bankInfo: BankInfoType | null;
+    declare companyInfo: CompanyInfoType | null;
 
     constructor(private user: UserType) {
         this.id = user.id;
@@ -42,7 +51,10 @@ class UserViewModel {
             phone: user.phone || null,
             gender: user.gender || null,
             createdAt: user.created_at,
-            updatedAt: user.updated_at
+            updatedAt: user.updated_at,
+            addressInfo: user.address_info ? AddressInfoViewModel.toViewModel(user.address_info) : null,
+            bankInfo: user.bank_info ? BankInfoViewModel.toViewModel(user.bank_info) : null,
+            companyInfo: user.company_info ? CompanyInfoViewModel.toViewModel(user.company_info) : null
         };
     }
 }

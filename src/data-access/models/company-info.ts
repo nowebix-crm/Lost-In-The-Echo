@@ -58,6 +58,6 @@ CompanyInfoModel.init(
   },
 );
 
-CompanyInfoModel.belongsTo(UserModel, { targetKey: 'id', foreignKey: 'user_id', as: 'company_info' });
+UserModel.hasOne(CompanyInfoModel, { sourceKey: 'id', foreignKey: 'user_id', as: 'company_info' });
 
 export default CompanyInfoModel;

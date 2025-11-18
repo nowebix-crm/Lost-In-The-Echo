@@ -1,12 +1,10 @@
-import { WhereOptions, InferAttributes } from "sequelize";
-
 import UserModel from "../models/users";
 
-import { USER_ROLES, UserCreationType } from "../../constants/users-contstants";
+import { UserCreationType, UserUpdateType } from "../../constants/users-contstants";
 
 class UserRepo {
-    static async findById(id: string) {
-        const user = await UserModel.findByPk(id);
+    static async findById(id: string, include?: any) {
+        const user = await UserModel.findByPk(id, { include: include || [] });
 
         return user;
     }
@@ -29,11 +27,22 @@ class UserRepo {
         return users;
     }
 
-    static async findAllClients(whereClause: any) {
+    static async update(userId: string, user: UserUpdateType) {
+        const updatedUser = await UserModel.update(user, { 
+            where: { id: userId },
+            returning: true
+        });
+
+        return updatedUser;
+    }
+
+    static async getUsers(whereClause: any, include?: any, orderBy?: any) {
         const users = await UserModel.findAll({ 
             attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'phone', 'status'], 
             where: whereClause,
-            raw: true
+            raw: true,
+            include: include || [],
+            order: orderBy || [['created_at', 'DESC']]
         });
 
         return users;
