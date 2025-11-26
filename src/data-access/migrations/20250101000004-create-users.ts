@@ -1,0 +1,83 @@
+import { DataTypes } from '@sequelize/core';
+import type { Migration } from '../../umzug.js';
+
+const TABLE_NAME = 'users';
+
+export const up: Migration = async ({ context: sequelize }) => {
+  await sequelize.getQueryInterface().createTable(TABLE_NAME, {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
+    },
+    organization_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'organizations',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+    first_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    last_name: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING(120),
+      allowNull: false,
+      unique: true,
+    },
+    password_hash: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'roles',
+        key: 'id',
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'CASCADE',
+    },
+    status: {
+      type: 'status_enum',
+      defaultValue: 'active',
+      allowNull: true,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: true,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    deleted_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+  });
+
+  // Create indexes
+  await sequelize.getQueryInterface().addIndex(TABLE_NAME, ['organization_id'], {
+    name: 'idx_users_org_id',
+  });
+  await sequelize.getQueryInterface().addIndex(TABLE_NAME, ['role_id'], {
+    name: 'idx_users_role_id',
+  });
+};
+
+export const down: Migration = async ({ context: sequelize }) => {
+  await sequelize.getQueryInterface().dropTable(TABLE_NAME);
+};
+
