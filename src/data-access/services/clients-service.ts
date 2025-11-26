@@ -233,4 +233,28 @@ const updateClient = async (clientId: string, clientUpdateData: ClientCreationTy
     }
 }
 
-export { getAllClients, findClientById, createClient, updateClient };
+const deleteClientById = async (clientId: string): Promise<ServiceResult<any>> => {
+    try {
+        const existingClient = await UserRepo.findById(clientId, clientIncludes);
+
+        if (!existingClient) {
+            return {
+                success: false,
+                error: 'Client not found'
+            };
+        }
+
+        await UserRepo.deleteById(clientId);
+
+        return {
+            success: true,
+        }
+    } catch (error) {
+        console.log(`Error deleting client: ${error}`);
+        return {
+            success: false,
+            error: 'Failed to delete client'
+        };
+    }
+}
+export { getAllClients, findClientById, createClient, updateClient, deleteClientById };

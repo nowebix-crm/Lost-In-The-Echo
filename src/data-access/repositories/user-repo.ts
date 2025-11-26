@@ -47,6 +47,10 @@ class UserRepo {
 
         return users;
     }
+
+    static async deleteById(id: string) {
+        await UserModel.destroy({ where: { id } });
+    }
 }
 
 export default UserRepo;

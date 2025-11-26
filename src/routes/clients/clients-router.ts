@@ -43,5 +43,16 @@ clientsRouter
 
     return res.status(200).json({ data });
 })
+.delete('/delete/:clientId', async (req: Request, res: Response) => {
+    const { clientId } = req.params;
+
+    const { data, error } = await ClientsService.deleteClientById(clientId);
+
+    if (error) {
+        return res.status(500).json({ error });
+    }
+
+    return res.status(200).json({ data, message: 'Client deleted successfully' });
+})
 
 export { clientsRouter };
