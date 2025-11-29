@@ -15,7 +15,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'organizations',
+        table: 'organizations',
         key: 'id',
       },
       onDelete: 'CASCADE',
@@ -25,7 +25,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model: 'clients',
+        table: 'clients',
         key: 'id',
       },
       onDelete: 'SET NULL',
@@ -35,7 +35,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
-        model: 'companies',
+        table: 'companies',
         key: 'id',
       },
       onDelete: 'SET NULL',
@@ -45,7 +45,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'users',
+        table: 'users',
         key: 'id',
       },
       onDelete: 'RESTRICT',
@@ -69,7 +69,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'pipeline_stages',
+        table: 'pipeline_stages',
         key: 'id',
       },
       onDelete: 'RESTRICT',

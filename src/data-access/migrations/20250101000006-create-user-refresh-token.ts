@@ -20,7 +20,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'users',
+        table: 'users',
         key: 'id',
       },
       onDelete: 'CASCADE',

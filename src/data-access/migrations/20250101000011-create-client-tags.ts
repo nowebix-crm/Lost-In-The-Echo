@@ -10,7 +10,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'clients',
+        table: 'clients',
         key: 'id',
       },
       onDelete: 'CASCADE',
@@ -21,7 +21,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'tags',
+        table: 'tags',
         key: 'id',
       },
       onDelete: 'CASCADE',

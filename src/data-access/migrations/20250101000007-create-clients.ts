@@ -14,22 +14,10 @@ export const up: Migration = async ({ context: sequelize }) => {
     organization_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: {
-        model: 'organizations',
-        key: 'id',
-      },
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
     },
     manager_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id',
-      },
-      onDelete: 'SET NULL',
-      onUpdate: 'CASCADE',
     },
     first_name: {
       type: DataTypes.STRING(50),
@@ -114,9 +102,36 @@ export const up: Migration = async ({ context: sequelize }) => {
   await sequelize.getQueryInterface().addIndex(TABLE_NAME, ['last_name', 'first_name'], {
     name: 'idx_clients_fullname',
   });
+
+  // Add foreign key constraints
+  await sequelize.getQueryInterface().addConstraint(TABLE_NAME, {
+    fields: ['organization_id'],
+    type: 'FOREIGN KEY',
+    name: 'fk_clients_organization',
+    references: {
+      table: 'organizations',
+      field: 'id',
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  await sequelize.getQueryInterface().addConstraint(TABLE_NAME, {
+    fields: ['manager_id'],
+    type: 'FOREIGN KEY',
+    name: 'fk_clients_manager',
+    references: {
+      table: 'users',
+      field: 'id',
+    },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  });
 };
 
 export const down: Migration = async ({ context: sequelize }) => {
+  await sequelize.getQueryInterface().removeConstraint(TABLE_NAME, 'fk_clients_organization');
+  await sequelize.getQueryInterface().removeConstraint(TABLE_NAME, 'fk_clients_manager');
   await sequelize.getQueryInterface().dropTable(TABLE_NAME);
 };
 

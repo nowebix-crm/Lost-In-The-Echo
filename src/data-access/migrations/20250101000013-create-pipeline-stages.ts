@@ -15,7 +15,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'pipelines',
+        table: 'pipelines',
         key: 'id',
       },
       onDelete: 'CASCADE',

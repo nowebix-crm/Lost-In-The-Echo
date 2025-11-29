@@ -14,12 +14,6 @@ export const up: Migration = async ({ context: sequelize }) => {
     organization_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: {
-        model: 'organizations',
-        key: 'id',
-      },
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
     },
     first_name: {
       type: DataTypes.STRING(50),
@@ -41,12 +35,6 @@ export const up: Migration = async ({ context: sequelize }) => {
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'roles',
-        key: 'id',
-      },
-      onDelete: 'RESTRICT',
-      onUpdate: 'CASCADE',
     },
     status: {
       type: 'status_enum',
@@ -75,9 +63,36 @@ export const up: Migration = async ({ context: sequelize }) => {
   await sequelize.getQueryInterface().addIndex(TABLE_NAME, ['role_id'], {
     name: 'idx_users_role_id',
   });
+
+  // Add foreign key constraints
+  await sequelize.getQueryInterface().addConstraint(TABLE_NAME, {
+    fields: ['organization_id'],
+    type: 'FOREIGN KEY',
+    name: 'fk_users_organization',
+    references: {
+      table: 'organizations',
+      field: 'id',
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  await sequelize.getQueryInterface().addConstraint(TABLE_NAME, {
+    fields: ['role_id'],
+    type: 'FOREIGN KEY',
+    name: 'fk_users_role',
+    references: {
+      table: 'roles',
+      field: 'id',
+    },
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  });
 };
 
 export const down: Migration = async ({ context: sequelize }) => {
+  await sequelize.getQueryInterface().removeConstraint(TABLE_NAME, 'fk_users_organization');
+  await sequelize.getQueryInterface().removeConstraint(TABLE_NAME, 'fk_users_role');
   await sequelize.getQueryInterface().dropTable(TABLE_NAME);
 };
 

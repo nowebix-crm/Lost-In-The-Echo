@@ -1,4 +1,5 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+
 import { sequelize } from '../../db/db-connection';
 
 export type ActivityEntityEnum = 'client' | 'company' | 'deal';

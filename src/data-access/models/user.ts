@@ -28,6 +28,12 @@ UserModel.init(
     organization_id: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        table: 'organizations',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     first_name: {
       type: DataTypes.STRING(50),
