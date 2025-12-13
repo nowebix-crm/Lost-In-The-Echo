@@ -1,11 +1,20 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 
 import { sequelize } from '../../db/db-connection';
 
 export type ActivityEntityEnum = 'client' | 'company' | 'deal';
 export type ActivityTypeEnum = 'note' | 'call' | 'meeting' | 'task' | 'email';
 
-export class ActivityModel extends Model<InferAttributes<ActivityModel>, InferCreationAttributes<ActivityModel>> {
+export class ActivityModel extends Model<
+  InferAttributes<ActivityModel>,
+  InferCreationAttributes<ActivityModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare author_id: string;
@@ -75,4 +84,3 @@ ActivityModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

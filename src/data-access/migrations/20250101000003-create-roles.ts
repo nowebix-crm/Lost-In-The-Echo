@@ -1,4 +1,5 @@
 import { DataTypes } from '@sequelize/core';
+
 import type { Migration } from '../../umzug.js';
 
 const TABLE_NAME = 'roles';
@@ -11,43 +12,66 @@ export const up: Migration = async ({ context: sequelize }) => {
       autoIncrement: true,
       allowNull: false,
     },
-    organization_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
     name: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.ENUM(
+        'admin',
+        'organization_owner',
+        'organization_manager',
+        'organization_client'
+      ),
       allowNull: false,
     },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-      allowNull: true,
+      allowNull: false,
     },
     updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: false,
+    },
+    deleted_at: {
       type: DataTypes.DATE,
       allowNull: true,
     },
   });
 
-  // Create index for organization_id
-  await sequelize.getQueryInterface().addIndex(TABLE_NAME, ['organization_id'], {
-    name: 'idx_roles_org_id',
-  });
-
-  await sequelize.getQueryInterface().addConstraint(TABLE_NAME, {
-    fields: ['organization_id'],
-    type: 'FOREIGN KEY',
-    name: 'fk_roles_organization',
-    references: {
-      table: 'organizations',
-      field: 'id',
+  const now = new Date();
+  await sequelize.getQueryInterface().bulkInsert(TABLE_NAME, [
+    {
+      name: 'admin',
+      created_at: now,
+      updated_at: now,
     },
-  });
+    {
+      name: 'organization_owner',
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      name: 'organization_manager',
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      name: 'organization_client',
+      created_at: now,
+      updated_at: now,
+    },
+  ]);
 };
 
 export const down: Migration = async ({ context: sequelize }) => {
-  await sequelize.getQueryInterface().removeConstraint(TABLE_NAME, 'fk_roles_organization');
   await sequelize.getQueryInterface().dropTable(TABLE_NAME);
+  await sequelize.getQueryInterface().bulkDelete(TABLE_NAME, {
+    where: {
+      name: [
+        'admin',
+        'organization_owner',
+        'organization_manager',
+        'organization_client',
+      ],
+    },
+  });
 };
-

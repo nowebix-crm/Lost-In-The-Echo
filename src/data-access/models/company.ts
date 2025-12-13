@@ -1,11 +1,20 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
 export type StatusEnum = 'active' | 'inactive';
 export type SourceEnum = 'site' | 'ad' | 'referral' | 'cold_call';
 export type PriorityEnum = 'low' | 'medium' | 'high' | 'highest';
 
-export class CompanyModel extends Model<InferAttributes<CompanyModel>, InferCreationAttributes<CompanyModel>> {
+export class CompanyModel extends Model<
+  InferAttributes<CompanyModel>,
+  InferCreationAttributes<CompanyModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare manager_id: string | null;
@@ -72,4 +81,3 @@ CompanyModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

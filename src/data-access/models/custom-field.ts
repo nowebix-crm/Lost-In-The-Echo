@@ -1,9 +1,18 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
 export type CustomFieldEntityEnum = 'client' | 'company' | 'deal';
 
-export class CustomFieldModel extends Model<InferAttributes<CustomFieldModel>, InferCreationAttributes<CustomFieldModel>> {
+export class CustomFieldModel extends Model<
+  InferAttributes<CustomFieldModel>,
+  InferCreationAttributes<CustomFieldModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare entity_type: CustomFieldEntityEnum;
@@ -58,4 +67,3 @@ CustomFieldModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

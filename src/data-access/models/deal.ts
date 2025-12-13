@@ -1,7 +1,16 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
-export class DealModel extends Model<InferAttributes<DealModel>, InferCreationAttributes<DealModel>> {
+export class DealModel extends Model<
+  InferAttributes<DealModel>,
+  InferCreationAttributes<DealModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare client_id: string | null;
@@ -73,4 +82,3 @@ DealModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

@@ -5,7 +5,7 @@ import cors from 'cors';
 
 // dotenv.config();
 
-import { registerRoutes } from './routes';
+import { registerRoutes } from './web-api/routes';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -17,9 +17,9 @@ app.use(cors());
 registerRoutes(app);
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

@@ -1,7 +1,16 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
-export class PipelineModel extends Model<InferAttributes<PipelineModel>, InferCreationAttributes<PipelineModel>> {
+export class PipelineModel extends Model<
+  InferAttributes<PipelineModel>,
+  InferCreationAttributes<PipelineModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare name: string;
@@ -37,4 +46,3 @@ PipelineModel.init(
     updatedAt: 'updated_at',
   }
 );
-

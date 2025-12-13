@@ -9,4 +9,3 @@ export const down: Migration = async ({ context: sequelize }) => {
   await sequelize.query('DROP EXTENSION IF EXISTS pg_trgm;');
   await sequelize.query('DROP EXTENSION IF EXISTS pgcrypto;');
 };
-

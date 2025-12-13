@@ -1,7 +1,16 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
-export class TagModel extends Model<InferAttributes<TagModel>, InferCreationAttributes<TagModel>> {
+export class TagModel extends Model<
+  InferAttributes<TagModel>,
+  InferCreationAttributes<TagModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare value: string;
@@ -41,4 +50,3 @@ TagModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

@@ -1,4 +1,10 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
 export type GenderEnum = 'male' | 'female';
@@ -6,7 +12,10 @@ export type StatusEnum = 'active' | 'inactive';
 export type SourceEnum = 'site' | 'ad' | 'referral' | 'cold_call';
 export type PriorityEnum = 'low' | 'medium' | 'high' | 'highest';
 
-export class ClientModel extends Model<InferAttributes<ClientModel>, InferCreationAttributes<ClientModel>> {
+export class ClientModel extends Model<
+  InferAttributes<ClientModel>,
+  InferCreationAttributes<ClientModel>
+> {
   declare id: CreationOptional<string>;
   declare organization_id: string;
   declare manager_id: string | null;
@@ -103,4 +112,3 @@ ClientModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

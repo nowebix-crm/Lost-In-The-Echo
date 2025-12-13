@@ -1,7 +1,16 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
-export class OrganizationModel extends Model<InferAttributes<OrganizationModel>, InferCreationAttributes<OrganizationModel>> {
+export class OrganizationModel extends Model<
+  InferAttributes<OrganizationModel>,
+  InferCreationAttributes<OrganizationModel>
+> {
   declare id: CreationOptional<string>;
   declare owner_id: string;
   declare title: string;
@@ -46,4 +55,3 @@ OrganizationModel.init(
     deletedAt: 'deleted_at',
   }
 );
-

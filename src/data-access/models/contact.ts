@@ -1,9 +1,25 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, CreationOptional } from '@sequelize/core';
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  CreationOptional,
+} from '@sequelize/core';
 import { sequelize } from '../../db/db-connection';
 
-export type ContactTypeEnum = 'phone' | 'email' | 'telegram' | 'whatsapp' | 'viber' | 'gmail' | 'instagram';
+export type ContactTypeEnum =
+  | 'phone'
+  | 'email'
+  | 'telegram'
+  | 'whatsapp'
+  | 'viber'
+  | 'gmail'
+  | 'instagram';
 
-export class ContactModel extends Model<InferAttributes<ContactModel>, InferCreationAttributes<ContactModel>> {
+export class ContactModel extends Model<
+  InferAttributes<ContactModel>,
+  InferCreationAttributes<ContactModel>
+> {
   declare id: CreationOptional<string>;
   declare entity_type: ContactTypeEnum;
   declare entity_id: string;
@@ -24,7 +40,15 @@ ContactModel.init(
       allowNull: false,
     },
     entity_type: {
-      type: DataTypes.ENUM('phone', 'email', 'telegram', 'whatsapp', 'viber', 'gmail', 'instagram'),
+      type: DataTypes.ENUM(
+        'phone',
+        'email',
+        'telegram',
+        'whatsapp',
+        'viber',
+        'gmail',
+        'instagram'
+      ),
       allowNull: false,
     },
     entity_id: {
@@ -32,7 +56,15 @@ ContactModel.init(
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM('phone', 'email', 'telegram', 'whatsapp', 'viber', 'gmail', 'instagram'),
+      type: DataTypes.ENUM(
+        'phone',
+        'email',
+        'telegram',
+        'whatsapp',
+        'viber',
+        'gmail',
+        'instagram'
+      ),
       allowNull: false,
     },
     value: {
@@ -59,4 +91,3 @@ ContactModel.init(
     deletedAt: 'deleted_at',
   }
 );
-
