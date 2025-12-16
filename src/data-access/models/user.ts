@@ -36,7 +36,7 @@ UserModel.init(
     },
     organization_id: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       references: {
         table: 'organizations',
         key: 'id',

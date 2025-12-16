@@ -13,7 +13,7 @@ export const up: Migration = async ({ context: sequelize }) => {
     },
     organization_id: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
     },
     first_name: {
       type: DataTypes.STRING(50),
