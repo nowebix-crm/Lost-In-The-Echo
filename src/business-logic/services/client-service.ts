@@ -115,6 +115,7 @@ export const createClient = async (
     };
   } catch (error) {
     console.log(`Error creating client: ${error}`);
+
     return {
       success: false,
       error: 'Failed to create client',

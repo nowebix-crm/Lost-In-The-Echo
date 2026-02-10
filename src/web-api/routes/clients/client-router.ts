@@ -28,20 +28,20 @@ clientRouter.get(
 );
 
 clientRouter.post(
-  '/',
+  '/create',
   validate(createClientSchema, 'body'),
   asyncAuthHandler(ClientController.createClient)
 );
 
 clientRouter.put(
-  '/:clientId',
+  '/update/:clientId',
   validate(clientIdParamSchema, 'params'),
   validate(updateClientSchema, 'body'),
   asyncAuthHandler(ClientController.updateClient)
 );
 
 clientRouter.delete(
-  '/:clientId',
+  '/delete/:clientId',
   validate(clientIdParamSchema, 'params'),
   asyncAuthHandler(ClientController.deleteClient)
 );

@@ -43,11 +43,13 @@ export const authorize =
   (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
     if (!req.user) {
       res.status(401).json({ message: 'Not authenticated' });
+      
       return;
     }
 
     if (!allowedRoles.includes(req.user.roleId)) {
       res.status(403).json({ message: 'Insufficient permissions' });
+
       return;
     }
 
@@ -56,5 +58,5 @@ export const authorize =
 
 export const authorizeAdminOrManager = authorize(
   ROLES_IDS.ADMIN,
-  ROLES_IDS.ORGANIZATION_MANAGER
+  ROLES_IDS.ORGANIZATION_OWNER
 );
