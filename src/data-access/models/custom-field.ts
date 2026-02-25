@@ -5,21 +5,26 @@ import {
   Model,
   CreationOptional,
 } from '@sequelize/core';
-
 import { sequelize } from '../../db/db-connection';
 
-export class UserTokensModel extends Model<
-  InferAttributes<UserTokensModel>,
-  InferCreationAttributes<UserTokensModel>
+export type CustomFieldEntityEnum = 'client' | 'company' | 'deal';
+
+export class CustomFieldModel extends Model<
+  InferAttributes<CustomFieldModel>,
+  InferCreationAttributes<CustomFieldModel>
 > {
   declare id: CreationOptional<string>;
-  declare refresh_token: string;
-  declare user_id: string;
+  declare organization_id: string;
+  declare entity_type: CustomFieldEntityEnum;
+  declare entity_id: string;
+  declare name: string;
+  declare value: string;
   declare created_at: CreationOptional<Date>;
   declare updated_at: CreationOptional<Date>;
+  declare deleted_at: CreationOptional<Date | null>;
 }
 
-UserTokensModel.init(
+CustomFieldModel.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -27,12 +32,24 @@ UserTokensModel.init(
       primaryKey: true,
       allowNull: false,
     },
-    refresh_token: {
-      type: DataTypes.STRING,
+    organization_id: {
+      type: DataTypes.UUID,
       allowNull: false,
     },
-    user_id: {
+    entity_type: {
+      type: DataTypes.ENUM('client', 'company', 'deal'),
+      allowNull: false,
+    },
+    entity_id: {
       type: DataTypes.UUID,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING(80),
+      allowNull: false,
+    },
+    value: {
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     created_at: DataTypes.DATE,
@@ -41,18 +58,12 @@ UserTokensModel.init(
   },
   {
     sequelize,
-    tableName: 'user_refresh_token',
+    tableName: 'custom_fields',
     paranoid: true,
     freezeTableName: true,
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
-    indexes: [
-      {
-        unique: true,
-        fields: ['refresh_token'],
-      },
-    ],
   }
 );

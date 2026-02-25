@@ -5,21 +5,20 @@ import {
   Model,
   CreationOptional,
 } from '@sequelize/core';
-
 import { sequelize } from '../../db/db-connection';
 
-export class UserTokensModel extends Model<
-  InferAttributes<UserTokensModel>,
-  InferCreationAttributes<UserTokensModel>
+export class PipelineModel extends Model<
+  InferAttributes<PipelineModel>,
+  InferCreationAttributes<PipelineModel>
 > {
   declare id: CreationOptional<string>;
-  declare refresh_token: string;
-  declare user_id: string;
+  declare organization_id: string;
+  declare name: string;
   declare created_at: CreationOptional<Date>;
   declare updated_at: CreationOptional<Date>;
 }
 
-UserTokensModel.init(
+PipelineModel.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -27,32 +26,23 @@ UserTokensModel.init(
       primaryKey: true,
       allowNull: false,
     },
-    refresh_token: {
-      type: DataTypes.STRING,
+    organization_id: {
+      type: DataTypes.UUID,
       allowNull: false,
     },
-    user_id: {
-      type: DataTypes.UUID,
+    name: {
+      type: DataTypes.STRING(80),
       allowNull: false,
     },
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
-    deleted_at: DataTypes.DATE,
   },
   {
     sequelize,
-    tableName: 'user_refresh_token',
-    paranoid: true,
+    tableName: 'pipelines',
     freezeTableName: true,
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    deletedAt: 'deleted_at',
-    indexes: [
-      {
-        unique: true,
-        fields: ['refresh_token'],
-      },
-    ],
   }
 );
